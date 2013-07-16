@@ -1,6 +1,8 @@
 s3 = require 's3'
 async = require 'async'
 
+to = (file) -> "#{file.src} to #{file.dest}"
+
 module.exports = (grunt) ->
   ENV = process.env
   # For WHAT is the purpose of uploading versions of files if the version lacks
@@ -30,15 +32,16 @@ module.exports = (grunt) ->
     unless branch is 'master'
       grunt.log.ok 'not uploading any files because this is not the master branch'
       return
+    # Go forth, and grab thee configuration!
+    config = grunt.config 'ember-s3'
+    files = grunt.file.expand(config.src || 'dist/*.js')
+    bucketName = config.bucketName or throw new Error('grunt-ember-s3: bucketName is required!')
+    return unless files.length
+
     client = s3.createClient
       key: ENV.AWS_ACCESS_KEY_ID
       secret: ENV.AWS_SECRET_ACCESS_KEY
-      bucket: 'ember-test'
-
-    # Go forth, and grab thee configuration!
-    config = grunt.config 'ember-s3'
-    files = grunt.file.expand config.files.src
-    return unless files.length
+      bucket: bucketName
 
     # Transform the files into a format suitable for the upload function!
     uploads = (new FileUpload(file) for file in files)
@@ -50,11 +53,15 @@ module.exports = (grunt) ->
 
     # Upload To S3, whilst notifying the user of thine intent!
     upload = (file, cb) ->
-      grunt.log.ok "uploading #{file.src} to #{file.dest}"
+      grunt.log.writeln "Uploading #{to file}"
       upload = client.upload file.src, file.dest
-      upload.on('error', (err)-> cb(err))
-      upload.on('end', cb)
+      upload.on 'error', (err)->
+        grunt.log.errorlns "Failed to upload #{to file}!"
+        grunt.log.errorlns err
+        done(err)
+      upload.on 'end', ->
+        grunt.log.oklns "Uploaded #{to file}"
+        cb()
 
-    # Process each item asynchronously, and yet sequentially!
-    async.eachSeries uploads, upload, done
+    async.each uploads, upload, done
 

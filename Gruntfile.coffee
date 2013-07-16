@@ -1,9 +1,18 @@
 
 module.exports = (grunt) ->
-  grunt.loadNpmTasks 'coffee'
+  module = require './package.json'
+  grunt.loadNpmTasks(dep) for dep,_ of module.devDependencies when /grunt-/.test(dep)
   grunt.loadTasks 'tasks'
 
   grunt.initConfig
     coffee:
-      ext: '.js'
-      src: '*.coffee'
+      compile:
+        expand: true
+        ext: '.js'
+        src: ['tasks/*.coffee']
+
+    'ember-s3':
+      bucketName: 'ember-test'
+
+    'npm-publish'
+      require: 'coffee'
