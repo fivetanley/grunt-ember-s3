@@ -15,4 +15,4 @@ module.exports = (grunt) ->
       bucketName: 'ember-test'
 
     'npm-publish'
-      require: 'coffee'
+      require: 'coffee:compile'
