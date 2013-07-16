@@ -51,10 +51,11 @@ module.exports = (grunt) ->
 
     done = @async()
 
+    headers = { 'x-amz-acl': 'public-read' }
     # Upload To S3, whilst notifying the user of thine intent!
     upload = (file, cb) ->
       grunt.log.writeln "Uploading #{to file}"
-      upload = client.upload file.src, file.dest
+      upload = client.upload file.src, file.dest, headers
       upload.on 'error', (err)->
         grunt.log.errorlns "Failed to upload #{to file}!"
         grunt.log.errorlns err
