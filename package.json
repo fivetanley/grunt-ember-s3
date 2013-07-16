@@ -9,5 +9,6 @@
     "grunt": "~0.4.1",
     "grunt-contrib-coffee": "~0.7.0",
     "grunt-npm": "0.0.2"
-  }
+  },
+  "repository": "https://github.com/fivetanley/grunt-ember-s3.git"
 }
