@@ -17,7 +17,7 @@ In your `.bashrc` or `.zshrc`:
 export TRAVIS_COMMIT='something-fake' # This will be here on Travis CI.
 export TRAVIS_BRANCH='master' # This will be here on Travis CI.
 export AWS_ACCESS_KEY_ID='something' # Encrypt this in .travis.yml
-export AWS_SECRET_ACECSS_KEY='asdf1234' # Encrypt this in .travis.yml
+export AWS_SECRET_ACCESS_KEY='asdf1234' # Encrypt this in .travis.yml
 ```
 
 You can read about encrypting environment variables on the
