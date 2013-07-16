@@ -9,7 +9,7 @@ module.exports = (grunt) ->
       compile:
         expand: true
         ext: '.js'
-        src: ['tasks/*.coffee']
+        src: ['index.coffee','tasks/*.coffee']
 
     'ember-s3':
       bucketName: 'ember-test'
