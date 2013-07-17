@@ -30,8 +30,9 @@ grunt.loadNpmTasks('grunt-ember-s3');
 grunt.initConfig({
   'ember-s3':
     src: [ 'dist/*.js' ], // defaults to this
-    bucketName: 'ember-test'
-});
+    bucketName: 'ember-test',
+    // optional, if given, creates a "folder" named foo on s3
+    prefix: 'foo' });
 ```
 
 In the `.travis.yml`:
