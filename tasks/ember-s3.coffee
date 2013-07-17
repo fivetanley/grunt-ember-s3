@@ -13,9 +13,10 @@ module.exports = (grunt) ->
   # 1-latest.js
   fileName = (file) -> file.split('/')[1]
   gitFileName = (file,comm=commit) ->
+    config = grunt.config('pkg').verison
     baseName = fileName(file).split('.')[0]
     baseName = "#{baseName}-#{comm}"
-    baseName + '.' + (file.split('.')[1..]).join('')
+    baseName + '.' + (file.split('.')[1..]).join '.'
 
   # Give the author convenience and reduce duplication by specifying the
   # upload as a "latest" upload!
