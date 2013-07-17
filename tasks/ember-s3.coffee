@@ -13,7 +13,6 @@ module.exports = (grunt) ->
   # 1-latest.js
   fileName = (file) -> file.split('/')[1]
   gitFileName = (file,comm=commit) ->
-    config = grunt.config('pkg').verison
     baseName = fileName(file).split('.')[0]
     baseName = "#{baseName}-#{comm}"
     baseName + '.' + (file.split('.')[1..]).join '.'
@@ -21,11 +20,13 @@ module.exports = (grunt) ->
   # Give the author convenience and reduce duplication by specifying the
   # upload as a "latest" upload!
   class FileUpload
-    constructor: (@src, @fileSuffix = '') ->
+    constructor: (@prefix,@src, @fileSuffix = '') ->
+      @prefix or= ''
       @dest = if @fileSuffix
         gitFileName(@src, @fileSuffix)
       else
         gitFileName(@src)
+      @dest = @prefix.replace('/','') + '/' + @dest if @prefix
 
   # The meat of the matter!
   grunt.registerTask 'ember-s3', ->
@@ -35,6 +36,7 @@ module.exports = (grunt) ->
       return
     # Go forth, and grab thee configuration!
     config = grunt.config 'ember-s3'
+    prefix = config.prefix
     files = grunt.file.expand(config.src || 'dist/*.js')
     bucketName = config.bucketName or throw new Error('grunt-ember-s3: bucketName is required!')
     return unless files.length
@@ -45,10 +47,10 @@ module.exports = (grunt) ->
       bucket: bucketName
 
     # Transform the files into a format suitable for the upload function!
-    uploads = (new FileUpload(file) for file in files)
+    uploads = (new FileUpload(prefix,file) for file in files)
     # Thou shalt not forget the 'latest' version thou shalt upload for consumer
     # convenience!
-    uploads = uploads.concat (new FileUpload(file, 'latest') for file in files)
+    uploads = uploads.concat (new FileUpload(prefix, file, 'latest') for file in files)
 
     done = @async()
 

@@ -13,6 +13,7 @@ module.exports = (grunt) ->
 
     'ember-s3':
       bucketName: 'ember-test'
+      prefix: 'studly'
 
     'npm-publish'
       require: 'coffee:compile'
