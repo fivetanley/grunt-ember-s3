@@ -1,6 +1,6 @@
 {
   "name": "grunt-ember-s3",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "dependencies": {
     "async": "~0.2.9",
     "s3": "~0.3.0"
