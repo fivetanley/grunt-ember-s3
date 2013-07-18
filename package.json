@@ -1,6 +1,6 @@
 {
   "name": "grunt-ember-s3",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "dependencies": {
     "async": "~0.2.9",
     "s3": "~0.3.0"
@@ -10,5 +10,6 @@
     "grunt-contrib-coffee": "~0.7.0",
     "grunt-npm": "0.0.2"
   },
-  "repository": "https://github.com/fivetanley/grunt-ember-s3.git"
+  "repository": "https://github.com/fivetanley/grunt-ember-s3.git",
+  "license": "MIT"
 }

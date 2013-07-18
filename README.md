@@ -41,4 +41,8 @@ In the `.travis.yml`:
 after_success: 'grunt ember-s3'
 ```
 
+# License
+
+MIT (see the LICENSE file in this repository).
+
 [travis]: http://about.travis-ci.org/docs/user/encryption-keys/
