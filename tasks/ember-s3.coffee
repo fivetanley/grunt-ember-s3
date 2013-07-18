@@ -7,8 +7,8 @@ module.exports = (grunt) ->
   ENV = process.env
   # For WHAT is the purpose of uploading versions of files if the version lacks
   # presence!
-  commit = ENV.TRAVIS_COMMIT or throw new Error('set a TRAVIS_COMMIT env var')
 
+  commit = ENV.TRAVIS_COMMIT
   # Turn some lovely filename such as dist/1.js into 1-#{commit}.js and
   # 1-latest.js
   fileName = (file) -> file.split('/')[1]
